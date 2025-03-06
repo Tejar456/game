@@ -1,10 +1,11 @@
 <template>
-  <div class="flex justify-center items-center h-screen">
-    <img
-      src="/assets//img/bg.png"
-      alt="bg"
-      class="h-screen w-full fixed top-0 right-0 -z-10 object-cover"
-    />
-    <img src="/assets/img/button.png" alt="btn" class="w-1/2" />
+  <div class="h-screen flex items-center justify-center">
+    <NuxtLink to="/play">
+      <button
+        class="block w-40 px-4 py-2 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+      >
+        Play
+      </button>
+    </NuxtLink>
   </div>
 </template>
