@@ -1,141 +1,179 @@
 <template>
-    <div class="p-6 max-w-xl mx-auto">
-      <h1 class="text-2xl font-bold text-center">Kel</h1>
-      <div v-if="!quizFinished">
-        <div v-if="currentQuestion" class="mt-4">
-          <h2 class="text-lg font-semibold">
-            {{ currentIndex + 1 }}. {{ currentQuestion.question }}
-          </h2>
-          <div class="mt-2">
-            <button
-              v-for="(option, index) in shuffledOptions"
-              :key="index"
-              @click="checkAnswer(option)"
-              class="block w-full px-4 py-2 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-            >
-              {{ option }}
+  <div class="h-screen relative overflow-y-auto">
+    <img src="assets/img/5.jpg" alt="Background" class="w-full h-full object-cover fixed inset-0">
+
+    <div class="relative min-h-screen flex items-center justify-center py-6 px-4">
+      <NuxtLink to="/" class="absolute top-4 left-4 p-2 bg-white hover:bg-white rounded-full 
+        transition-all duration-300 backdrop-blur-sm group">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
+          class="w-8 h-8 text-green-800 group-hover:scale-110 transition-transform duration-300">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+      </NuxtLink>
+      <div
+        class="border-2 border-green-800 p-4 sm:p-6 md:p-8 rounded-xl bg-white backdrop-blur-sm shadow-xl w-full max-w-[800px] mx-auto">
+        <h1 class="text-2xl md:text-3xl font-sans font-bold text-green-800 text-center mb-8">
+          Quiz Komponen Ekosistem Lingkungan
+        </h1>
+
+        <div v-if="!quizFinished" class="space-y-6">
+          <div v-if="currentQuestion" class="bg-transparent border border-green-500 p-6 rounded-xl">
+            <h2 class="text-xl md:text-2xl font-semibold text-green-950 mb-6">
+              {{ currentIndex + 1 }}. {{ currentQuestion.question }}
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
+              <button v-for="(option, index) in shuffledOptions" :key="index" @click="checkAnswer(option)" class="w-full px-6 py-4 bg-green-600 text-white text-lg md:text-xl 
+                font-semibold font-sans rounded-full hover:bg-green-700 transform hover:scale-105 transition-all duration-300 
+                shadow-lg hover:shadow-xl">
+                {{ option }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="text-center space-y-6 bg-transparent border border-green-500 p-6 rounded-xl">
+          <h2 class="text-2xl md:text-3xl font-bold text-green-950">Quiz Selesai!</h2>
+          <p class="text-xl text-green-900">Skor Anda: {{ score }} / {{ selectedQuestions.length }}</p>
+
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-6 sm:mt-8">
+            <button @click="startQuiz" class="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 
+        bg-green-600 text-white text-base sm:text-lg
+        font-semibold rounded-full hover:bg-green-700 
+        transform hover:scale-105 transition-all duration-300 
+        shadow-lg hover:shadow-xl">
+              Main Lagi
             </button>
+
+            <NuxtLink to="/" class="w-full sm:w-auto">
+              <button class="w-full px-4 sm:px-6 py-2.5 sm:py-3
+          bg-transparent border-2 border-green-600 text-green-600 
+          text-base sm:text-lg font-semibold rounded-full 
+          hover:bg-green-50 transform hover:scale-105 
+          transition-all duration-300 shadow-lg hover:shadow-xl">
+                Kembali
+              </button>
+            </NuxtLink>
           </div>
         </div>
       </div>
-      <div v-else class="mt-4 text-center">
-        <h2 class="text-xl font-bold">Quiz Selesai!</h2>
-        <p>Skor Anda: {{ score }} / {{ selectedQuestions.length }}</p>
-        <button
-          @click="startQuiz"
-          class="mt-4 px-4 py-2 bg-green-500 text-white rounded-md"
-        >
-          Main Lagi
-        </button>
-      </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        questions: [
-          {
-            question: "Tanah termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Abiotik",
-          },
-          {
-            question: "Air termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Abiotik",
-          },
-          {
-            question: "Batu termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Abiotik",
-          },
-          {
-            question: "Udara termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Abiotik",
-          },
-          {
-            question: "Rumput termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Biotik",
-          },
-          {
-            question: "Pasir termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Abiotik",
-          },
-          {
-            question: "Ikan termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Biotik",
-          },
-          {
-            question: "Matahari termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Abiotik",
-          },
-          {
-            question: "Gunung termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Abiotik",
-          },
-          {
-            question: "Jamur termasuk komponen?",
-            options: ["Biotik", "Abiotik"],
-            answer: "Biotik",
-          },
-        ],
-        selectedQuestions: [],
-        currentIndex: 0,
-        score: 0,
-        quizFinished: false,
-      };
+  </div>
+</template>
+
+<style scoped>
+.transform {
+  transition: transform 0.3s ease;
+}
+
+.hover\:scale-102:hover {
+  transform: scale(1.02);
+}
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+      questions: [
+        {
+          question: "Tanah termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik",
+        },
+        {
+          question: "Air termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik",
+        },
+        {
+          question: "Batu termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik",
+        },
+        {
+          question: "Udara termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik",
+        },
+        {
+          question: "Rumput termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik",
+        },
+        {
+          question: "Pasir termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik",
+        },
+        {
+          question: "Ikan termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik",
+        },
+        {
+          question: "Matahari termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik",
+        },
+        {
+          question: "Gunung termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik",
+        },
+        {
+          question: "Jamur termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik",
+        },
+      ],
+      selectedQuestions: [],
+      currentIndex: 0,
+      score: 0,
+      quizFinished: false,
+    };
+  },
+  computed: {
+    currentQuestion() {
+      return this.selectedQuestions[this.currentIndex];
     },
-    computed: {
-      currentQuestion() {
-        return this.selectedQuestions[this.currentIndex];
-      },
-      shuffledOptions() {
-        return this.currentQuestion
-          ? this.shuffleArray([...this.currentQuestion.options])
-          : [];
-      },
+    shuffledOptions() {
+      return this.currentQuestion
+        ? this.shuffleArray([...this.currentQuestion.options])
+        : [];
     },
-    methods: {
-      startQuiz() {
-        this.selectedQuestions = this.shuffleArray([...this.questions]).slice(
-          0,
-          5
-        );
-        this.currentIndex = 0;
-        this.score = 0;
-        this.quizFinished = false;
-      },
-      shuffleArray(array) {
-        return array.sort(() => Math.random() - 0.5);
-      },
-      checkAnswer(option) {
-        if (option === this.currentQuestion.answer) {
-          this.score++;
-        }
-        if (this.currentIndex < this.selectedQuestions.length - 1) {
-          this.currentIndex++;
-        } else {
-          this.quizFinished = true;
-        }
-      },
+  },
+  methods: {
+    startQuiz() {
+      this.selectedQuestions = this.shuffleArray([...this.questions]).slice(
+        0,
+        5
+      );
+      this.currentIndex = 0;
+      this.score = 0;
+      this.quizFinished = false;
     },
-    created() {
-      this.startQuiz();
+    shuffleArray(array) {
+      return array.sort(() => Math.random() - 0.5);
     },
-  };
-  </script>
-  
-  <style>
-  body {
-    font-family: Arial, sans-serif;
-  }
-  </style>
-  
+    checkAnswer(option) {
+      if (option === this.currentQuestion.answer) {
+        this.score++;
+      }
+      if (this.currentIndex < this.selectedQuestions.length - 1) {
+        this.currentIndex++;
+      } else {
+        this.quizFinished = true;
+      }
+    },
+  },
+  created() {
+    this.startQuiz();
+  },
+};
+</script>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+</style>
