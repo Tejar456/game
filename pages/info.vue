@@ -51,6 +51,7 @@
                     <div class="bg-green-600/85 p-4 rounded-lg">
                         <h2 class="font-semibold text-lg sm:text-xl mb-2">Cara Bermain:</h2>
                         <ul class="list-disc list-inside space-y-2 text-sm sm:text-base">
+                            <li>Baca materi terlebih dahulu(opsional)</li>
                             <li>Pilih jawaban yang benar dari pilihan yang tersedia</li>
                             <li>Tidak bisa kembali ke pertanyaan sebelumnya</li>
                             <li>Skor akan dihitung berdasarkan jawaban benar</li>
