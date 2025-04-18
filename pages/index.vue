@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen relative">
-    <img src="assets/img/bg.png" alt="Background" class="w-full h-full object-cover absolute inset-0">
+    <img src="assets/img/bg.webp" alt="Background" class="w-full h-full object-cover absolute inset-0">
 
     <div class="relative h-full flex items-center justify-center p-4 md:p-5">
       <div class="border-2 border-green-900 p-4 md:p-8 rounded-xl bg-gradient-to-br bg-white
@@ -22,16 +22,25 @@
             Komponen Ekosistem Lingkungan
           </h1>
 
-          <NuxtLink to="/play" class="block">
-            <div class="flex justify-center items-center">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <NuxtLink to="/play">
               <button class="w-48 md:w-64 px-4 md:px-6 py-3 md:py-4 bg-green-600 text-white text-lg md:text-xl 
-                font-semibold font-sans rounded-full hover:bg-green-700 transform hover:scale-105 transition-all duration-300 
-                shadow-lg hover:shadow-xl">
+        font-semibold font-sans rounded-full hover:bg-green-700 transform hover:scale-105 transition-all duration-300 
+        shadow-lg hover:shadow-xl">
                 Mainkan Quiz
               </button>
-            </div>
-          </NuxtLink>
+            </NuxtLink>
+
+            <NuxtLink to="/materi">
+              <button class="w-48 md:w-64 px-4 md:px-6 py-3 md:py-4 bg-green-600 text-white text-lg md:text-xl 
+        font-semibold font-sans rounded-full hover:bg-green-700 transform hover:scale-105 transition-all duration-300 
+        shadow-lg hover:shadow-xl">
+                Baca Materi
+              </button>
+            </NuxtLink>
+          </div>
         </div>
+
       </div>
     </div>
   </div>

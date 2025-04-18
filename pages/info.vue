@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen relative overflow-y-auto">
-        <img src="assets/img/6.jpg" alt="Background" class="w-full h-full object-cover fixed inset-0">
+        <img src="assets/img/6.webp" alt="Background" class="w-full h-full object-cover fixed inset-0">
 
         <div class="relative min-h-screen flex items-center justify-center py-6 px-4">
             <div
