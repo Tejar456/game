@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen relative overflow-y-auto">
-    <img src="assets/img/5.jpg" alt="Background" class="w-full h-full object-cover fixed inset-0">
+    <img src="assets/img/5.webp" alt="Background" class="w-full h-full object-cover fixed inset-0">
 
     <div class="relative min-h-screen flex items-center justify-center py-6 px-4">
       <NuxtLink to="/" class="absolute top-4 left-4 p-2 bg-white hover:bg-white rounded-full 
@@ -32,27 +32,35 @@
         </div>
 
         <div v-else class="text-center space-y-6 bg-transparent border border-green-500 p-6 rounded-xl">
-          <h2 class="text-2xl md:text-3xl font-bold text-green-950">Quiz Selesai!</h2>
-          <p class="text-xl text-green-900">Skor Anda: {{ score }} / {{ selectedQuestions.length }}</p>
+          <div class="relative">
+            <div v-if="isPerfectScore" class="absolute left-1/2 -translate-x-1/2 -top-20">
+              <ConfettiExplosion :particleCount="100" :force="0.3" :duration="3000" />
+            </div>
 
-          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-6 sm:mt-8">
-            <button @click="startQuiz" class="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 
+            <h2 class="text-2xl md:text-3xl font-bold text-green-950">
+              {{ isPerfectScore ? 'Selamat! Nilai Sempurna! 🎉' : 'Quiz Selesai!' }}
+            </h2>
+            <p class="text-xl text-green-900">Skor Anda: {{ score }} / {{ selectedQuestions.length }}</p>
+
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-6 sm:mt-8">
+              <button @click="startQuiz" class="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 
         bg-green-600 text-white text-base sm:text-lg
         font-semibold rounded-full hover:bg-green-700 
         transform hover:scale-105 transition-all duration-300 
         shadow-lg hover:shadow-xl">
-              Main Lagi
-            </button>
+                Main Lagi
+              </button>
 
-            <NuxtLink to="/" class="w-full sm:w-auto">
-              <button class="w-full px-4 sm:px-6 py-2.5 sm:py-3
+              <NuxtLink to="/" class="w-full sm:w-auto">
+                <button class="w-full px-4 sm:px-6 py-2.5 sm:py-3
           bg-transparent border-2 border-green-600 text-green-600 
           text-base sm:text-lg font-semibold rounded-full 
           hover:bg-green-50 transform hover:scale-105 
           transition-all duration-300 shadow-lg hover:shadow-xl">
-                Kembali
-              </button>
-            </NuxtLink>
+                  Kembali
+                </button>
+              </NuxtLink>
+            </div>
           </div>
         </div>
       </div>
@@ -71,7 +79,12 @@
 </style>
 
 <script>
+import ConfettiExplosion from 'vue-confetti-explosion'
+
 export default {
+  components: {
+    ConfettiExplosion
+  },
   data() {
     return {
       questions: [
@@ -90,11 +103,7 @@ export default {
           options: ["Biotik", "Abiotik"],
           answer: "Abiotik",
         },
-        {
-          question: "Udara termasuk komponen?",
-          options: ["Biotik", "Abiotik"],
-          answer: "Abiotik",
-        },
+
         {
           question: "Rumput termasuk komponen?",
           options: ["Biotik", "Abiotik"],
@@ -106,25 +115,106 @@ export default {
           answer: "Abiotik",
         },
         {
+          question: "Pohon mangga yang menghasilkan buah merupakan komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Air yang dibutuhkan tumbuhan untuk pertumbuhan termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        },
+        {
+          question: "Ulat yang memakan daun di kebun termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Bakteri yang menguraikan sisa-sisa organisme termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Cahaya matahari yang digunakan untuk fotosintesis adalah komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        },
+        {
+          question: "Jamur pengurai yang menguraikan daun jatuh merupakan komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Tanah sebagai media tumbuh tanaman termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        },
+        {
+          question: "Kupu-kupu yang membantu penyerbukan bunga adalah komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Suhu udara yang mempengaruhi pertumbuhan tanaman termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        },
+        {
+          question: "Burung pemakan serangga dalam ekosistem termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Kelembaban udara yang mempengaruhi kehidupan tumbuhan termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        },
+        {
           question: "Ikan termasuk komponen?",
           options: ["Biotik", "Abiotik"],
           answer: "Biotik",
         },
-        {
-          question: "Matahari termasuk komponen?",
-          options: ["Biotik", "Abiotik"],
-          answer: "Abiotik",
-        },
+
         {
           question: "Gunung termasuk komponen?",
           options: ["Biotik", "Abiotik"],
           answer: "Abiotik",
         },
         {
-          question: "Jamur termasuk komponen?",
+          question: "Hewan herbivora yang memakan tumbuhan termasuk komponen?",
           options: ["Biotik", "Abiotik"],
-          answer: "Biotik",
+          answer: "Biotik"
         },
+        {
+          question: "Udara yang diperlukan untuk pernapasan termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        },
+        {
+          question: "Tumbuhan hijau yang melakukan fotosintesis termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Cacing tanah yang menggemburkan tanah termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "Mineral dalam tanah yang dibutuhkan tumbuhan termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        },
+        {
+          question: "Semut yang membuat sarang di tanah termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Biotik"
+        },
+        {
+          question: "pH tanah yang mempengaruhi pertumbuhan tanaman termasuk komponen?",
+          options: ["Biotik", "Abiotik"],
+          answer: "Abiotik"
+        }
       ],
       selectedQuestions: [],
       currentIndex: 0,
@@ -141,7 +231,11 @@ export default {
         ? this.shuffleArray([...this.currentQuestion.options])
         : [];
     },
+    isPerfectScore() {
+      return this.quizFinished && this.score === this.selectedQuestions.length
+    }
   },
+
   methods: {
     startQuiz() {
       this.selectedQuestions = this.shuffleArray([...this.questions]).slice(
