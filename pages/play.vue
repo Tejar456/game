@@ -11,17 +11,23 @@
         </svg>
       </NuxtLink>
       <div
+        class="absolute top-4 right-4 bg-white text-green-800 font-bold text-lg px-4 py-2 rounded-full shadow-lg backdrop-blur-sm z-50">
+        {{ formattedTime }}
+      </div>
+
+      <div
         class="border-2 border-green-800 p-4 sm:p-6 md:p-8 rounded-xl bg-white backdrop-blur-sm shadow-xl w-full max-w-[800px] mx-auto">
         <h1 class="text-2xl md:text-3xl font-sans font-bold text-green-800 text-center mb-8">
           Quiz Komponen Ekosistem Lingkungan
         </h1>
 
         <div v-if="!quizFinished" class="space-y-6">
-          <div v-if="currentQuestion" class="bg-transparent border border-green-500 p-6 rounded-xl">
+          <div v-if="currentQuestion"
+            class="bg-transparent border border-green-500 p-6 rounded-xl h-[320px] md:h-[200px] flex justify-between flex-col">
             <h2 class="text-xl md:text-2xl font-semibold text-green-950 mb-6">
               {{ currentIndex + 1 }}. {{ currentQuestion.question }}
             </h2>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button v-for="(option, index) in shuffledOptions" :key="index" @click="checkAnswer(option)" class="w-full px-6 py-4 bg-green-600 text-white text-lg md:text-xl 
                 font-semibold font-sans rounded-full hover:bg-green-700 transform hover:scale-105 transition-all duration-300 
                 shadow-lg hover:shadow-xl">
@@ -31,18 +37,19 @@
           </div>
         </div>
 
-        <div v-else class="text-center space-y-6 bg-transparent border border-green-500 p-6 rounded-xl">
+        <div v-else
+          class="text-center space-y-6 bg-transparent border border-green-500 p-6 rounded-xl h-[320px] md:h-[200px]">
           <div class="relative">
             <div v-if="isPerfectScore" class="absolute left-1/2 -translate-x-1/2 -top-20">
               <ConfettiExplosion :particleCount="100" :force="0.3" :duration="3000" />
             </div>
 
-            <h2 class="text-2xl md:text-3xl font-bold text-green-950">
+            <h2 class="text-2xl md:text-3xl font-bold text-green-950 ">
               {{ isPerfectScore ? 'Selamat! Nilai Sempurna! 🎉' : 'Quiz Selesai!' }}
             </h2>
             <p class="text-xl text-green-900">Skor Anda: {{ score }} / {{ selectedQuestions.length }}</p>
 
-            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-6 sm:mt-8">
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-14 md:mt-6 sm:mt-8">
               <button @click="startQuiz" class="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 
         bg-green-600 text-white text-base sm:text-lg
         font-semibold rounded-full hover:bg-green-700 
@@ -75,6 +82,10 @@
 
 .hover\:scale-102:hover {
   transform: scale(1.02);
+}
+
+.timer {
+  transition: all 0.3s ease;
 }
 </style>
 
@@ -220,6 +231,8 @@ export default {
       currentIndex: 0,
       score: 0,
       quizFinished: false,
+      timer: 60,
+      intervalId: null,
     };
   },
   computed: {
@@ -232,19 +245,21 @@ export default {
         : [];
     },
     isPerfectScore() {
-      return this.quizFinished && this.score === this.selectedQuestions.length
-    }
+      return this.quizFinished && this.score === this.selectedQuestions.length;
+    },
+    formattedTime() {
+      const minutes = Math.floor(this.timer / 60);
+      const seconds = this.timer % 60;
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    },
   },
-
   methods: {
     startQuiz() {
-      this.selectedQuestions = this.shuffleArray([...this.questions]).slice(
-        0,
-        5
-      );
+      this.selectedQuestions = this.shuffleArray([...this.questions]).slice(0, 5);
       this.currentIndex = 0;
       this.score = 0;
       this.quizFinished = false;
+      this.startTimer();
     },
     shuffleArray(array) {
       return array.sort(() => Math.random() - 0.5);
@@ -257,17 +272,27 @@ export default {
         this.currentIndex++;
       } else {
         this.quizFinished = true;
+        clearInterval(this.intervalId);
       }
+    },
+    startTimer() {
+      if (this.intervalId) clearInterval(this.intervalId);
+      this.timer = 60;
+      this.intervalId = setInterval(() => {
+        if (this.timer > 0) {
+          this.timer--;
+        } else {
+          clearInterval(this.intervalId);
+          this.quizFinished = true;
+        }
+      }, 1000);
     },
   },
   created() {
     this.startQuiz();
   },
+  beforeDestroy() {
+    if (this.intervalId) clearInterval(this.intervalId);
+  },
 };
 </script>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-}
-</style>

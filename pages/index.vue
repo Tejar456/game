@@ -17,10 +17,10 @@
         </div>
 
         <div class="space-y-4 md:space-y-6">
-          <h1
-            class="text-center text-2xl md:text-4xl font-serif font-semibold text-green-950 mb-10 md:mb-20 animate-fadeIn">
+          <h1 class="text-center text-2xl md:text-4xl font-sans font-bold text-green-950 mb-10 md:mb-20">
             Komponen Ekosistem Lingkungan
           </h1>
+
 
           <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <NuxtLink to="/play">
